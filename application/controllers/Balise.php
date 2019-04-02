@@ -62,9 +62,6 @@ class Balise extends CI_Controller {
                 $error = "Fichier est supérieur a : 1000x1000px";
             }
         }
-        else {
-            $error = "Fichier non envoyer ou erreur inconnu";
-        }
         
         $error2 = "";
         if ($_FILES['userfile'] != null && $_FILES['userfile']['error'] == 0) {
@@ -87,9 +84,6 @@ class Balise extends CI_Controller {
             else {
                 $error2 = "Fichier est supérieur a : 500ko";
             }
-        }
-        else {
-            $error2 = "Fichier non envoyer ou erreur inconnu";
         }
         
         if ($error === "" && $error2 === "") {
@@ -183,29 +177,65 @@ class Balise extends CI_Controller {
         $borne = Borne::find($ref);
       if ($error === "" && $error2 === "" && $borne != null) {
           
-            $modBorne = Borne::find($ref);
-            $borneID = $modBorne->idB;
+            $modBorne = Borne::find($this->input->post('id'));
+            $borneID = $modBorne -> idB;
             $long  = $this->input->post('long');
             $lat  = $this->input->post('lat');
             $nomB  = $this->input->post('nom');
-			try {
+                        
+            $texte = Texte::find($modBorne->idT);
+            if (isset ($texte)){
+                Texte::where('idT', $modBorne->idT)
+                          ->update(['contenuT' => $this->input->post('txt'),
+                                    'auteurT' => $this->input->post('aut')]);
+                
+                $idTxt = $modBorne->idT;
+            }else{
+                $addTexte = new Texte();
+                $addTexte->contenuT = $this->input->post('txt');
+                $addTexte->auteurT = $this->input->post('aut');
+                $addTexte->save();
+                $idTxt = $addTexte->idT;
+            }
+            
+            $photo = Gallerie::find($modBorne->idIG);
+            if(isset($photo)){
+                Gallerie::where('idIG',$modBorne->idIG)
+                    ->update(['titreIG'=>$this->input->post('titreIG'),
+                              'droitUsage'=>$this->input->post('droits')]);
+                
+                $idImg = $modBorne->idIG;
+            }else{
+              $addImg = new Gallerie();
+                $addImg->titreIG = $this->input->post('titreIG');
+                $addImg->droitUsage = $this->input->post('droits');
+                $addImg->save();
+                $idImg = $addImg->idImg;  
+            }
+            
+            $info = Information::find($modBorne->idInfo);
+            if (isset($info)){
+                Information::where('idInfo',$modBorne->idInfo)
+                    ->update(['titreInfo'=>$this->input->post('titreInfo'),
+                              'motClésInfo'=>$this->input->post('motsCle')]);
+                
+                $idInfo = $modBorne->idInfo;
+            }else{
+                $addInfo = new Information();
+                $addInfo->titreInfo = $this->input->post('titreInfo');
+                $addInfo->motClésInfo = $this->input->post('motsCle');
+                $addInfo->save();
+                $idInfo = $addInfo->idInfo;
+            }
+            
             Borne::where(
                 'idB',$borneID
                 )->update(['LONG'=> $long,
                            'LAG' => $lat,
-                            'nomB'=>$nomB]);
-
-            Texte::where('idT', $modBorne->idT)
-                      ->update(['contenuT' => $this->input->post('txt'),
-                                'auteurT' => $this->input->post('aut')]);
-            
-            Gallerie::where('idIG',$modBorne->idIG)
-                    ->update(['titreIG'=>$this->input->post('titreIG'),
-                              'droitUsage'=>$this->input->post('droits')]);
-            
-            Information::where('idInfo',$modBorne->idInfo)
-                    ->update(['titreInfo'=>$this->input->post('titreInfo'),
-                              'motClésInfo'=>$this->input->post('motsCle')]);
+                            'nomB'=>$nomB,
+                            'idT'=>$idTxt,
+                            'idIG'=>$idImg,
+                            'idInfo'=>$idInfo]);
 			 redirect('Acceuil');
 			 
 			 } catch (Exception $e) {
