@@ -238,9 +238,6 @@ class Balise extends CI_Controller {
                             'idInfo'=>$idInfo]);
 			 redirect('Acceuil');
 			 
-			 } catch (Exception $e) {
-				echo $e;
-			}
     }
       else{
 
