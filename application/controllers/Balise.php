@@ -127,6 +127,7 @@ class Balise extends CI_Controller {
     }
     
     public function update($ref = null){
+      var_dump($_POST);
       if ($ref == null ) redirect('/Acceuil');
             
             //verif zéro erreur photo
@@ -178,9 +179,6 @@ class Balise extends CI_Controller {
                 $error2 = "Fichier est supérieur a : 500ko";
             }
         }
-        else {
-            $error2 = "Fichier non envoyer ou erreur inconnu";
-        }
         
         $borne = Borne::find($ref);
       if ($error === "" && $error2 === "" && $borne != null) {
@@ -190,6 +188,7 @@ class Balise extends CI_Controller {
             $long  = $this->input->post('long');
             $lat  = $this->input->post('lat');
             $nomB  = $this->input->post('nom');
+			try {
             Borne::where(
                 'idB',$borneID
                 )->update(['LONG'=> $long,
@@ -207,13 +206,15 @@ class Balise extends CI_Controller {
             Information::where('idInfo',$modBorne->idInfo)
                     ->update(['titreInfo'=>$this->input->post('titreInfo'),
                               'motClésInfo'=>$this->input->post('motsCle')]);
-
-            redirect('Acceuil');
-      }
+			 redirect('Acceuil');
+			 
+			 } catch (Exception $e) {
+				echo $e;
+			}
+    }
       else{
 
           redirect('Balise/update_borne/'.$ref);
-
       }
     }
     

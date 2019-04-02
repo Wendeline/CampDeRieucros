@@ -48,6 +48,15 @@
         <div class="nav-wrapper container">
             <a href="<?php echo base_url('Acceuil') ?>" class="brand-logo">Camp De Rieucros</a>
 
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="sidenav" id="mobile-demo">
+			    <li><a href="<?php echo base_url('Acceuil') ?>">Accueil</a></li>
+			    <li><a href="<?php echo base_url('Galerie') ?>">Galerie</a></li>
+			    <li><a href="<?php echo base_url('InfoUsers') ?>">Information</a></li>
+			    <li> <a href="http://www.camp-rieucros.com/" target="_blank">Camp de Rieucros</a></li>
+			    <li><a href="<?php echo base_url('login/disconnect') ?>">Connexion</a></li>
+			</ul>
+			
             <ul class="right hide-on-med-and-down">
                 <li>
                     <a href="<?php echo base_url('Acceuil') ?>">Accueil</a>
