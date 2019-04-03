@@ -38,55 +38,66 @@ while ($row = $traitement->fetch()){
     }
     
     if($txt != "" && $img != "" && $info != ""){ //on récup tout
-        $contenuT = $txt['contenuT'];
+        $texte = $txt['contenuT'];
         //recupérer l'image
         $LienImg = "http://campderieucros.siomende.fr/assets/images/photoGallerie/".$img['titreIG'].".jpg";
         //récupérer le pdf
         $Lienpdf = "http://campderieucros.siomende.fr/assets/pdf/".$info['titreInfo'].".pdf";
        
-        $borne = array($row['idB'], $row['nomB'],$row['LAG'],$row['LONG'], $contenuT ,$LienImg, $Lienpdf);
+        $borne = array($row['idB'], $row['nomB'],$row['LAG'],$row['LONG'], $texte ,$LienImg, $Lienpdf);
     }
     else if($txt == "" && $img != "" && $info != ""){ //on récup tout sauf le texte
         //recupérer l'image
         $LienImg = "http://campderieucros.siomende.fr/assets/images/photoGallerie/".$img['titreIG'].".jpg";
         //récupérer le pdf
         $Lienpdf = "http://campderieucros.siomende.fr/assets/pdf/".$info['titreInfo'].".pdf";
+        $texte ="";
         
-        $borne = array($row['idB'], $row['nomB'],$row['LAG'],$row['LONG'], $txt ,$LienImg, $Lienpdf);
+        $borne = array($row['idB'], $row['nomB'],$row['LAG'],$row['LONG'], $texte ,$LienImg, $Lienpdf);
     }
     else if ($txt != "" && $img == "" && $info != ""){ //on récup tout sauf l'image
-        $contenuT = $txt['contenuT'];
+        $texte = $txt['contenuT'];
         //récupérer le pdf
         $Lienpdf = "http://campderieucros.siomende.fr/assets/pdf/".$info['titreInfo'].".pdf";
+        $LienImg ="";
         
-        $borne = array($row['idB'], $row['nomB'],$row['LAG'],$row['LONG'], $contenuT, $img ,$Lienpdf);
+        $borne = array($row['idB'], $row['nomB'],$row['LAG'],$row['LONG'], $texte, $LienImg ,$Lienpdf);
     }
     else if($txt != "" && $img != "" && $info == ""){ //on récup tout sauf l'info
-        $contenuT = $txt['contenuT'];
+        $texte = $txt['contenuT'];
         //récupérer l'image
         $LienImg = "http://campderieucros.siomende.fr/assets/images/photoGallerie/".$img['titreIG'].".jpg";
         
-        $borne = array($row['idB'], $row['nomB'],$row['LAG'],$row['LONG'], $contenuT ,$LienImg, $info);
+        $borne = array($row['idB'], $row['nomB'],$row['LAG'],$row['LONG'], $texte ,$LienImg, $Lienpdf);
     }
     else if($txt == "" && $img == "" && $info != ""){ //on récup que l'info
         //récupérer le pdf
         $Lienpdf = "http://campderieucros.siomende.fr/assets/pdf/".$info['titreInfo'].".pdf";
+        $texte = "";
+        $LienImg ="";
         
-        $borne = array($row['idB'], $row['nomB'],$row['LAG'],$row['LONG'], $txt, $img ,$Lienpdf);
+        $borne = array($row['idB'], $row['nomB'],$row['LAG'],$row['LONG'], $texte, $LienImg ,$Lienpdf);
     }
     else if ($txt == "" && $img != "" && $info == ""){ //on récup que l'image
         //récupérer l'image
         $LienImg = "http://campderieucros.siomende.fr/assets/images/photoGallerie/".$img['titreIG'].".jpg";
+        $texte="";
+        $Lienpdf="";
         
-        $borne = array($row['idB'], $row['nomB'],$row['LAG'],$row['LONG'], $txt ,$LienImg, $info);
+        $borne = array($row['idB'], $row['nomB'],$row['LAG'],$row['LONG'], $texte ,$LienImg, $Lienpdf);
     }
     else if($txt != "" && $img == "" && $info == ""){ //on récup que le texte
-        $contenuT = $txt['contenuT'];
+        $texte = $txt['contenuT'];
+        $LienImg = "";
+        $Lienpdf ="";
         
-        $borne = array($row['idB'], $row['nomB'],$row['LAG'],$row['LONG'], $contenuT , $img , $info);
+        $borne = array($row['idB'], $row['nomB'],$row['LAG'],$row['LONG'], $texte , $LienImg , $Lienpdf);
     }
     else if($txt == "" && $img == "" && $info == ""){ //on récup rien
-        $borne = array($row['idB'], $row['nomB'],$row['LAG'],$row['LONG'], $txt , $img , $info);
+        $texte ="";
+        $LienImg="";
+        $Lienpdf="";
+        $borne = array($row['idB'], $row['nomB'],$row['LAG'],$row['LONG'], $texte , $LienImg , $Lienpdf);
     }
         array_push($bornes,$borne);
 }
