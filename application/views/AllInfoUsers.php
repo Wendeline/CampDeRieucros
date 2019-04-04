@@ -27,9 +27,15 @@
                     echo '<div class="col m5 s12">';
                         echo "<h3>".$info->titreInfo."</h3>";
 
-                        $numTxt = $info->idT;
-                        $objTxt = Texte::find($numTxt);
-                        $txt = $objTxt->contenuT;
+                        if (isset($info->idT)){
+                            $numTxt = $info->idT;
+                            $objTxt = Texte::find($numTxt);
+                            $txt = $objTxt->contenuT;
+                        }else{
+                            $objTxt = "";
+                            $txt ="";
+                        }
+                        
 
                         echo "<p>".$txt."</p>";
                         echo "<i>Auteur : ".$objTxt->auteurT."</i>";

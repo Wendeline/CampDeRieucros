@@ -11,10 +11,15 @@
                     echo img('photoGallerie/'.$photo->titreIG.'.jpg','height="150" width="150"');
                     echo "<br>";
                     
-                    $numTxt = $photo->idT;
-                    $objTxt = Texte::find($numTxt);
-                    $txt = $objTxt->contenuT;
-                                        
+                    if isset($photo->idT){
+                    	$numTxt = $photo->idT;
+	                    $objTxt = Texte::find($numTxt);
+	                    $txt = $objTxt->contenuT;
+                    }else{
+                    	$objTxt ="";
+                    	$txt = "";
+                    }
+                                 
                       echo "<b>".$txt."</b>";
                     echo "<br>";
                     echo "<b>".$objTxt->auteurT."</b>";
